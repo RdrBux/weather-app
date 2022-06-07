@@ -13,7 +13,9 @@
       <form id="search">
         <label for="city">City</label>
         <input type="search" name="city" id="city" />
-        <button>S</button>
+        <button>
+          <img class="magnifier" src="./img/magnifier.svg" alt="Search" />
+        </button>
       </form>
       <button class="unit">°C / °F</button>
     </header>
@@ -38,8 +40,14 @@
         <div class="wind-sub">
           <p><span class="large js-wind-speed"></span>km/h</p>
           <div class="winddir">
-            <p>^</p>
-            <p><strong>North</strong></p>
+            <img
+              class="arrow js-wind-arrow"
+              src="./img/arrow.svg"
+              alt="arrow"
+            />
+            <p>
+              <strong><span class="js-wind-dir"></span></strong>
+            </p>
           </div>
         </div>
       </div>

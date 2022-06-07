@@ -30,6 +30,7 @@ function extractData(data) {
     feelsLike: `${data.main.feels_like}`,
     humidity: `${data.main.humidity}%`,
     windDir: `${data.wind.deg}`,
+    windCard: windDegreeToCardinal(data.wind.deg),
     windSpeed: `${data.wind.speed}`,
     timezone: `${data.timezone}`,
   };
@@ -49,6 +50,35 @@ function secsToTime(seconds, fix = 1) {
   return new Date(1000 * seconds).toISOString().substring(11, 16);
 }
 
+function windDegreeToCardinal(num) {
+  const n = Number(num);
+  function between(x, min, max) {
+    return x >= min && x < max;
+  }
+  if (between(n, 22.5, 67.5)) {
+    return 'Northeast';
+  }
+  if (between(n, 67.5, 112.5)) {
+    return 'East';
+  }
+  if (between(n, 112.5, 157.5)) {
+    return 'Southeast';
+  }
+  if (between(n, 157.5, 202.5)) {
+    return 'South';
+  }
+  if (between(n, 202.5, 247.5)) {
+    return 'Southwest';
+  }
+  if (between(n, 247.5, 292.5)) {
+    return 'West';
+  }
+  if (between(n, 292.5, 337.5)) {
+    return 'Northwest';
+  }
+  return 'North';
+}
+
 function displayData(obj) {
   const city = document.querySelector('.js-city');
   const day = document.querySelector('.js-day');
@@ -58,6 +88,8 @@ function displayData(obj) {
   const sunset = document.querySelector('.js-sunset');
   const windSpeed = document.querySelector('.js-wind-speed');
   const humidity = document.querySelector('.js-humidity');
+  const windArrow = document.querySelector('.js-wind-arrow');
+  const windDir = document.querySelector('.js-wind-dir');
 
   city.textContent = obj.city;
   day.textContent = obj.day;
@@ -67,6 +99,8 @@ function displayData(obj) {
   sunset.textContent = obj.sunset;
   windSpeed.textContent = obj.windSpeed;
   humidity.textContent = obj.humidity;
+  windArrow.style.transform = `rotate(${obj.windDir}deg)`;
+  windDir.textContent = obj.windCard;
 }
 
-fetchWeatherDataAPI('buenos aires');
+fetchWeatherDataAPI('barcelona');
