@@ -12,6 +12,7 @@ async function fetchWeatherDataAPI(city) {
       return response.json();
     })
     .then((data) => extractData(data))
+    .then((obj) => displayData(obj))
     .catch((error) => {
       throw new Error(`${error}`);
     });
@@ -20,7 +21,7 @@ async function fetchWeatherDataAPI(city) {
 function extractData(data) {
   const cityStats = {
     city: `${data.name}, ${data.sys.country}`,
-    time: `${secsToTime(Math.floor(Date.now() / 1000) + data.timezone)}`,
+    day: `${secsToTime(Math.floor(Date.now() / 1000) + data.timezone, 0)}`,
     sunrise: `${secsToTime(data.sys.sunrise + data.timezone)}`,
     sunset: `${secsToTime(data.sys.sunset + data.timezone)}`,
     weather: `${data.weather[0].main}`,
@@ -33,10 +34,39 @@ function extractData(data) {
     timezone: `${data.timezone}`,
   };
   console.log(cityStats);
+  return cityStats;
 }
 
-function secsToTime(seconds) {
+function secsToTime(seconds, fix = 1) {
+  if (fix === 0) {
+    return new Date(1000 * seconds).toLocaleDateString('en-us', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  }
   return new Date(1000 * seconds).toISOString().substring(11, 16);
 }
 
-fetchWeatherDataAPI('parana');
+function displayData(obj) {
+  const city = document.querySelector('.js-city');
+  const day = document.querySelector('.js-day');
+  const temp = document.querySelector('.js-temp');
+  const feelsLike = document.querySelector('.js-feels-like');
+  const sunrise = document.querySelector('.js-sunrise');
+  const sunset = document.querySelector('.js-sunset');
+  const windSpeed = document.querySelector('.js-wind-speed');
+  const humidity = document.querySelector('.js-humidity');
+
+  city.textContent = obj.city;
+  day.textContent = obj.day;
+  temp.textContent = obj.temp;
+  feelsLike.textContent = obj.feelsLike;
+  sunrise.textContent = obj.sunrise;
+  sunset.textContent = obj.sunset;
+  windSpeed.textContent = obj.windSpeed;
+  humidity.textContent = obj.humidity;
+}
+
+fetchWeatherDataAPI('buenos aires');

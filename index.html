@@ -5,10 +5,48 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <script src="script.js"></script>
-    <title>Document</title>
+    <script src="script.js" defer></script>
+    <title>Weather App</title>
   </head>
   <body>
-    <h1>Hi</h1>
+    <header>
+      <form id="search">
+        <label for="city">City</label>
+        <input type="search" name="city" id="city" />
+        <button>S</button>
+      </form>
+      <button class="unit">°C / °F</button>
+    </header>
+
+    <main>
+      <h1 class="js-city"></h1>
+      <p class="js-day"></p>
+      <div class="big">
+        <h2><span class="js-temp"></span>°C</h2>
+        <div class="weather-icon">???</div>
+      </div>
+      <p>Feels like <span class="js-feels-like"></span>°c</p>
+    </main>
+
+    <footer>
+      <div class="hours">
+        <p><strong>SUNRISE:</strong> <span class="js-sunrise"></span></p>
+        <p><strong>SUNSET:</strong> <span class="js-sunset"></span></p>
+      </div>
+      <div class="wind">
+        <h3>WIND</h3>
+        <div class="wind-sub">
+          <p><span class="large js-wind-speed"></span>km/h</p>
+          <div class="winddir">
+            <p>^</p>
+            <p><strong>North</strong></p>
+          </div>
+        </div>
+      </div>
+      <div class="humidity">
+        <h3>HUMIDITY</h3>
+        <p class="js-humidity"></p>
+      </div>
+    </footer>
   </body>
 </html>
