@@ -17,17 +17,26 @@
           <img class="magnifier" src="./img/magnifier.svg" alt="Search" />
         </button>
       </form>
-      <button class="unit">°C / °F</button>
+      <button class="unit">°C</button>
     </header>
 
     <main>
       <h1 class="js-city"></h1>
       <p class="js-day"></p>
       <div class="big">
-        <h2><span class="js-temp"></span>°C</h2>
-        <div class="weather-icon">???</div>
+        <h2>
+          <span class="js-temp"></span><span class="units-display"></span>
+        </h2>
+
+        <div class="weather">
+          <div><h1 class="js-weather"></h1></div>
+          <div><p class="js-weather-desc"></p></div>
+        </div>
       </div>
-      <p>Feels like <span class="js-feels-like"></span>°c</p>
+      <p>
+        Feels like <span class="js-feels-like"></span
+        ><span class="units-display"></span>
+      </p>
     </main>
 
     <footer>
@@ -38,7 +47,10 @@
       <div class="wind">
         <h3>WIND</h3>
         <div class="wind-sub">
-          <p><span class="large js-wind-speed"></span>km/h</p>
+          <p>
+            <span class="large js-wind-speed"></span
+            ><span class="wind-units"></span>
+          </p>
           <div class="winddir">
             <img
               class="arrow js-wind-arrow"

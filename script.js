@@ -1,6 +1,9 @@
-async function fetchWeatherDataAPI(city) {
+let unitsToDisplay = 'metric';
+
+async function fetchWeatherDataAPI(city, units = 'metric') {
+  unitsToDisplay = units;
   const promise = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=c90d91ec157c4b875dc5421e65879dbd`,
+    `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=${units}&APPID=c90d91ec157c4b875dc5421e65879dbd`,
     {
       mode: 'cors',
     }
@@ -26,7 +29,7 @@ function extractData(data) {
     sunset: `${secsToTime(data.sys.sunset + data.timezone)}`,
     weather: `${data.weather[0].main}`,
     weatherDesc: `${data.weather[0].description}`,
-    temp: `${data.main.temp}`,
+    temp: `${Math.round(data.main.temp)}`,
     feelsLike: `${data.main.feels_like}`,
     humidity: `${data.main.humidity}%`,
     windDir: `${data.wind.deg}`,
@@ -90,6 +93,11 @@ function displayData(obj) {
   const humidity = document.querySelector('.js-humidity');
   const windArrow = document.querySelector('.js-wind-arrow');
   const windDir = document.querySelector('.js-wind-dir');
+  const bodyBG = document.querySelector('body');
+  const unitsDisplay = document.querySelectorAll('.units-display');
+  const windUnits = document.querySelector('.wind-units');
+  const weatherInfo = document.querySelector('.js-weather');
+  const weatherDesc = document.querySelector('.js-weather-desc');
 
   city.textContent = obj.city;
   day.textContent = obj.day;
@@ -101,6 +109,39 @@ function displayData(obj) {
   humidity.textContent = obj.humidity;
   windArrow.style.transform = `rotate(${obj.windDir}deg)`;
   windDir.textContent = obj.windCard;
+  bodyBG.style.backgroundImage = backgroundSelector(obj.weather);
+  unitsDisplay.forEach((unit) =>
+    unitsToDisplay === 'metric'
+      ? (unit.textContent = '°C')
+      : (unit.textContent = '°F')
+  );
+  windUnits.textContent = unitsToDisplay === 'metric' ? 'm/s' : 'mph';
+  weatherInfo.textContent = obj.weather;
+  weatherDesc.textContent = obj.weatherDesc;
 }
 
-fetchWeatherDataAPI('barcelona');
+function backgroundSelector(str) {
+  let bg;
+  switch (str) {
+    case 'Thunderstorm':
+    case 'Drizzle':
+    case 'Rain':
+      bg = 'rain';
+      break;
+    case 'Clear':
+      bg = 'clear';
+      break;
+    case 'Snow':
+      bg = 'snow';
+      break;
+    case 'Clouds':
+      bg = 'cloud';
+      break;
+    default:
+      bg = 'mist';
+      break;
+  }
+  return `url('./img/bg-${bg}.svg')`;
+}
+
+fetchWeatherDataAPI('paris');
