@@ -5,14 +5,15 @@
 }
 
 p {
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(0, 0, 0, 0.85);
   margin-bottom: 0.5rem;
 }
 
 body {
   min-height: 100vh;
-  background-color: rgb(49, 170, 49);
-  color: white;
+  background-image: url(./img/bg-mist.svg);
+  background-size: cover;
+  color: black;
   font-size: 16px;
   font-family: sans-serif;
   display: grid;
@@ -57,7 +58,7 @@ header label {
 
 header input {
   padding: 0.5rem 1rem;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.5);
   color: white;
   border: none;
   margin: 0 0.5rem;
@@ -90,8 +91,17 @@ footer {
   align-items: center;
   gap: 10rem;
   text-align: center;
-  background: radial-gradient(circle, #3636368f 0%, #0000008f 100%);
+  background: radial-gradient(
+    circle,
+    rgba(54, 54, 54, 0.85) 0%,
+    rgba(0, 0, 0, 0.85) 100%
+  );
   border-top: 3px solid rgba(255, 255, 255, 0.185);
+  color: white;
+}
+
+footer p {
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .large {
@@ -106,5 +116,4 @@ footer {
 
 .arrow {
   width: 1.25rem;
-  transform: rotate(90deg);
 }
