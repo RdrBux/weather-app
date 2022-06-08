@@ -18,13 +18,13 @@ body {
   font-size: 16px;
   font-family: sans-serif;
   display: grid;
-  grid-template-rows: 4rem 1fr 7rem;
+  grid-template-rows: 5rem 1fr 7rem;
 }
 
 header {
   display: grid;
-  align-items: center;
   margin: 0.5rem 4rem;
+  align-items: center;
 }
 
 form {
@@ -63,9 +63,11 @@ header label {
 header input {
   padding: 0.75rem 0.5rem;
   height: 2.5rem;
+  width: 40ch;
   margin: 0 0.25rem;
   background-color: rgba(255, 255, 255, 0.5);
   color: rgb(53, 53, 53);
+  font-size: 1rem;
   border: none;
   border-radius: 5px;
 }
@@ -90,6 +92,16 @@ h1 {
 
 .big h2 {
   font-size: 6rem;
+}
+
+.weather {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.js-weather {
+  background-image: url(https://openweathermap.org/img/wn/10n@2x.png);
 }
 
 footer {

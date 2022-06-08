@@ -1,7 +1,6 @@
 let unitsToDisplay = 'metric';
 
 async function fetchWeatherDataAPI(city, units = 'metric') {
-  unitsToDisplay = units;
   const promise = await fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=${units}&APPID=c90d91ec157c4b875dc5421e65879dbd`,
     {
@@ -29,6 +28,7 @@ function extractData(data) {
     sunset: `${secsToTime(data.sys.sunset + data.timezone)}`,
     weather: `${data.weather[0].main}`,
     weatherDesc: `${data.weather[0].description}`,
+    weatherIcon: `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`,
     temp: `${Math.round(data.main.temp)}`,
     feelsLike: `${data.main.feels_like}`,
     humidity: `${data.main.humidity}%`,
@@ -37,7 +37,6 @@ function extractData(data) {
     windSpeed: `${data.wind.speed}`,
     timezone: `${data.timezone}`,
   };
-  console.log(cityStats);
   return cityStats;
 }
 
@@ -96,7 +95,8 @@ function displayData(obj) {
   const bodyBG = document.querySelector('body');
   const unitsDisplay = document.querySelectorAll('.units-display');
   const windUnits = document.querySelector('.wind-units');
-  const weatherInfo = document.querySelector('.js-weather');
+  const weatherInfo = (document.getElementById('js-weather').src =
+    obj.weatherIcon);
   const weatherDesc = document.querySelector('.js-weather-desc');
 
   city.textContent = obj.city;
@@ -116,7 +116,7 @@ function displayData(obj) {
       : (unit.textContent = '°F')
   );
   windUnits.textContent = unitsToDisplay === 'metric' ? 'm/s' : 'mph';
-  weatherInfo.textContent = obj.weather;
+  console.log(weatherInfo);
   weatherDesc.textContent = obj.weatherDesc;
 }
 
@@ -144,4 +144,20 @@ function backgroundSelector(str) {
   return `url('./img/bg-${bg}.svg')`;
 }
 
-fetchWeatherDataAPI('paris');
+fetchWeatherDataAPI('paris', unitsToDisplay);
+
+const form = document.querySelector('#search');
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const formProps = Object.fromEntries(formData);
+  fetchWeatherDataAPI(formProps.city, unitsToDisplay);
+});
+
+const unitsBtn = document.querySelector('.unit');
+unitsBtn.addEventListener('click', (e) => {
+  unitsToDisplay = unitsToDisplay === 'metric' ? 'imperial' : 'metric';
+  unitsBtn.textContent = unitsToDisplay === 'metric' ? '°C' : '°F';
+  const formCity = document.getElementById('city').value;
+  fetchWeatherDataAPI(formCity, unitsToDisplay);
+});
