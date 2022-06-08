@@ -116,7 +116,6 @@ function displayData(obj) {
       : (unit.textContent = '°F')
   );
   windUnits.textContent = unitsToDisplay === 'metric' ? 'm/s' : 'mph';
-  console.log(weatherInfo);
   weatherDesc.textContent = obj.weatherDesc;
 }
 

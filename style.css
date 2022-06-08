@@ -51,6 +51,10 @@ header button {
   font-size: 1.25rem;
 }
 
+header button:hover {
+  background-color: black;
+}
+
 header .magnifier {
   width: 1rem;
 }
